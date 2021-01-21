@@ -15,7 +15,7 @@ CateController.staticTables =(req,res)=>{
 }
 CateController.adds =(req,res)=>{
     // res.sendFile(path.join(__dirname,'views/add.html'));
-    res.render('add.html');
+    res.render('article-index.html');
 }
 // 添加分类页面
 CateController.cataddition =(req,res)=>{

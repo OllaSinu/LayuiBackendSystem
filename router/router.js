@@ -8,6 +8,7 @@ let router = express.Router();
 
 // 导入相应的控制器
 const CateController = require('../controller/CateController.js');
+const ArtController = require('../controller/ArtController.js');
 
 // 搭建后台管理访问系统
 // router.get('/',(req,res)=>{
@@ -32,7 +33,6 @@ router.post('/delCat',CateController.delCat)
 
 // 添加分类页面点击提交接口
 router.post('/postCat',CateController.postCat)
-
 // 添加成功后，跳转到catindex接口
 router.get('/catindex',CateController.catindex)
 
@@ -42,6 +42,13 @@ router.get('/catedit',CateController.catedit)
 router.get('/getOneCate',CateController.getOneCate)
 // 编辑分类的接口
 router.post('/updCate',CateController.updCate)
+
+// 文章列表
+router.get('/artindex',(req,res)=>{
+    res.render('article-index.html')
+})
+// 获取文章数据接口
+router.get('/allarticle',ArtController.allArticle)
 
 // 匹配失败的路由
 router.all('*',CateController.all)
