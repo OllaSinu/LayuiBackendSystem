@@ -81,7 +81,7 @@
             <td>${add_date}</td>
             <td>
                 <div class="layui-btn-group">
-                  <button title='编辑' cate_id="${cate_id}" type="button" class="layui-btn etid"><i class="layui-icon">&#xe642;</i></button>
+                  <button title='编辑' cate_id="${cate_id}" type="button" class="layui-btn edit"><i class="layui-icon">&#xe642;</i></button>
                   <button title='删除' cate_id="${cate_id}" type="button" class="layui-btn layui-btn-danger del"><i class="layui-icon">&#xe640;</i></button>
                 </div>
             </td>
@@ -135,8 +135,8 @@ $("#addition").on('click',function(){
 // 跳转到编辑页面
 // 由于是动态增删改查，所以，需要用事件委托来触发点击事件
 $("tbody").on('click','.edit',function(){
-      let cate_id = $(this).attr('cat_id')
-      location.href = "/catedit?cat_id=" + cate_id
+      let cate_id = $(this).attr('cate_id')
+      location.href = "/catedit?cate_id=" + cate_id
     })
 </script>
 </body>

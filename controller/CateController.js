@@ -2,11 +2,10 @@
 // 渲染模板，调用模型，响应json数据
 
 let CateController = {};
-
 // 引用dbquery连接数据库
 const model = require("../model/model.js")
 // 引入响应成功或失败的responseMessage/导入返回结果信息
-const {all,delsucc,delfail,exception,argsfail,addsucc,addfail} = require("../util/responseMessage");
+const {all,delsucc,delfail,exception,argsfail,addsucc,addfail,getsucc,getfail,updsucc,updfail} = require("../util/responseMessage");
 
 
 // 除首页之外的其它两个分类列表页面
@@ -102,7 +101,53 @@ CateController.catindex = (req,res)=>{
     res.render('staticTable.html')
 }
 
+// 展示编辑分类的页面
+CateController.catedit = (req,res)=>{
+    res.render('staticTable-edit.html')
+}
+// 获取单条分类数据
+CateController.getOneCate = async (req,res)=>{
+    // 1.接收参数
+   let {cate_id} = req.query;
+   if(!cate_id){
+       res.json(argsfail)
+   }else{
+       // 2.查询数据库
+       let sql = `select * from category where cate_id = ${cate_id}`;
+       let data = await model(sql);
+       // 3.返回数据
+       if(data.length){
+            // 加个errcode是为了更好地判断
+            data[0].errcode = 0;
+            res.json(data[0])
+       }else{
+           res.json(getfail)
+       }
+   }
+}
 
+// 实现分类的编辑入库
+CateController.updCate = async (req,res)=>{
+    //1.接收参数
+    let {cate_id,name,sort,add_date} = req.body
+    if(!cate_id){
+        res.json(argsfail);
+        return;
+    }
+    //2.编写sql
+    let sql = `update category set name='${name}',sort=${sort},add_date='${add_date}' 
+                where cate_id = ${cate_id}
+                `;
+    let result = await model(sql)
+    //3.返回结果
+    if(result.affectedRows){
+        res.json(updsucc)
+    }else{
+        res.json(updfail)
+    } 
+}
+
+// 匹配失败
 CateController.all =(req,res)=>{
     res.json(all)
 }

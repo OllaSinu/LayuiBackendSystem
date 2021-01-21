@@ -36,6 +36,13 @@ router.post('/postCat',CateController.postCat)
 // 添加成功后，跳转到catindex接口
 router.get('/catindex',CateController.catindex)
 
+// 渲染出编辑分类的页面
+router.get('/catedit',CateController.catedit)
+// 获取单个分类数据的接口
+router.get('/getOneCate',CateController.getOneCate)
+// 编辑分类的接口
+router.post('/updCate',CateController.updCate)
+
 // 匹配失败的路由
 router.all('*',CateController.all)
 
