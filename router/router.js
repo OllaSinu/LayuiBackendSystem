@@ -49,6 +49,12 @@ router.get('/artindex',(req,res)=>{
 })
 // 获取文章数据接口
 router.get('/allarticle',ArtController.allArticle)
+// 删除指定文章数据接口
+router.post('/deleteArticle',ArtController.deleteArticle)
+// 渲染出编辑文章的页面
+router.get('/artedit',ArtController.artEdit)
+// 渲染出添加文章的页面
+router.get('/addArticle',ArtController.addArticle)
 
 // 匹配失败的路由
 router.all('*',CateController.all)

@@ -83,8 +83,6 @@ CateController.postCat = async (req,res)=>{
     let {name,sort,add_date} = req.body;
     // 把数据入库
     let sql = `insert into category(name,sort,add_date) values('${name}',${sort},'${add_date}')`
-    console.log(sql);
-    
     // 把结果响应回前台
     let result = await model(sql);
     if(result.affectedRows){

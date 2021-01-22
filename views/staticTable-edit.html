@@ -49,11 +49,7 @@
   <!-- 引入底部 -->
   {{ include './common/footer.html' }}
 </div>
-<!-- 注意引入的依赖顺序 -->
-<script src="/public/layui/layui.js"></script>
-<script src="/public/js/jquery.js"></script>
-<script src="/public/js/moment.js"></script>
-<script src="/public/js/util.js"></script>
+{{ include './common/scriptjs.html' }}
 <script>
 // exec不仅可以拿到正则结果，还能拿到捕获组结果，如果 exec() 找到了匹配的文本，
 // 则返回一个结果数组。否则，返回 null。此数组的第 0 个元素是与正则表达式相匹配
