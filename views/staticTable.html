@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>layout 后台大布局 - Layui</title>
-  <link rel="stylesheet" href="/public/layui/css/layui.css">
+  {{ include './common/link.html' }}
 </head>
 <!-- 栏目管理页面 -->
 <body class="layui-layout-body">
@@ -133,6 +133,18 @@ $("tbody").on('click','.edit',function(){
       let cate_id = $(this).attr('cate_id')
       location.href = "/catedit?cate_id=" + cate_id
     })
+    function startNProgress(){
+        NProgress.set(0.4);// 默认设置40% NProgress.set(0) 等价与 NProgress.start()
+        let interval = setInterval(function(){
+            NProgress.inc(); // 以小量递增
+        },200)
+
+        $(window).on('load',()=>{
+            clearInterval(interval)
+            NProgress.done()
+        })
+    }
+startNProgress();
 </script>
 </body>
 </html>
