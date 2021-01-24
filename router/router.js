@@ -26,8 +26,12 @@ router.get('/adds',CateController.adds)
 // 渲染出添加分类的页面
 router.get('/catadd',CateController.cataddition)
 
-// 获取分类数据的接口  =>staticTable 表格数据
+
+// 获取所有分类数据的接口  =>staticTable 表格数据
+// 后面添加文章时也要用到操作
 router.get('/getCate',CateController.getCate)
+
+
 // 删除指定分类staticTable 表格数据的其中一栏
 router.post('/delCat',CateController.delCat)
 
@@ -55,6 +59,9 @@ router.post('/deleteArticle',ArtController.deleteArticle)
 router.get('/artedit',ArtController.artEdit)
 // 渲染出添加文章的页面
 router.get('/addArticle',ArtController.addArticle)
+// 提交文章的数据入库
+router.post('/submitArticles',ArtController.submitArticles)
+
 
 // 匹配失败的路由
 router.all('*',CateController.all)

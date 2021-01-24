@@ -9,13 +9,13 @@ const model = require('../model/model.js');
 // 引入响应成功或失败的responseMessage/导入返回结果信息
 const {all,delsucc,delfail,exception,argsfail,addsucc,addfail,getsucc,getfail,updsucc,updfail} = require("../util/responseMessage");
 
-
+// 渲染获取数据库所有数据后的页面
 ArticleController.allArticle = async (req,res)=>{
     //1. 接收查询字符串,给limit取别名
     let {page,limit:pagesize} = req.query;
     //2.编写sql语句
     let offset = (page - 1)*pagesize;
-    let sql = `select * from article limit ${offset},${pagesize}`;
+    let sql = `select * from article order by art_id desc limit ${offset},${pagesize}`;
     let sql2 = `select count(*) as count from article;`
     let promise1 =  model(sql); // [{},{},{}]
     let promise2 =  model(sql2); // [{count:16}]
@@ -34,7 +34,7 @@ ArticleController.allArticle = async (req,res)=>{
     // res.json(articleData)
 }
 
-//删除指定文章数据
+//删除指定一项文章数据
 ArticleController.deleteArticle = async (req,res)=>{
     let {art_id} = req.body;
     let sql = `delete from article where art_id = ${art_id}`;
@@ -45,7 +45,6 @@ ArticleController.deleteArticle = async (req,res)=>{
         res.json(delfail)
     }
 }
-
 // 渲染出文章编辑的页面
 ArticleController.artEdit = (req,res)=>{
     res.render('article-edit.html')
@@ -55,5 +54,19 @@ ArticleController.artEdit = (req,res)=>{
 ArticleController.addArticle = (req,res)=>{
     res.render('article-add.html')
 }
+// 提交数据入库
+ArticleController.submitArticles = async (req,res)=>{
+    let {title,cat_id,status,comtent} = req.body;
+    let sql = `insert into article(title,comtent,cat_id,status)
+                values('${title}','${comtent}',${cat_id},${status})
+                `;
+    let result = await model(sql)
+    if(result.affectedRows){
+        res.json(addsucc)
+    }else{
+        res.json(addfail)
+    }
+}
+
 // 暴露模块
 module.exports = ArticleController;
