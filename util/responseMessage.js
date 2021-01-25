@@ -10,7 +10,7 @@ const responseMessage = {
     updsucc: {errcode:0,message:'编辑成功'},
     updfail:{errcode:10007,message:'编辑失败'},
     notfound:{errcode:10004,message:"url请求错误"},
-    exception: {errcode:10003,'message':"服务器繁忙，请稍后再试"}
+    exception: {errcode:10003,'message':"服务器繁忙，请稍后再试 "}
 }
 
 

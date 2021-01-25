@@ -1,14 +1,16 @@
 // 路由器
-
 const express = require('express');
 
 // 得到一个路由器
 let router = express.Router();
 
-
 // 导入相应的控制器
 const CateController = require('../controller/CateController.js');
 const ArtController = require('../controller/ArtController.js');
+
+// 引入图片的相应模块
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 
 // 搭建后台管理访问系统
 // router.get('/',(req,res)=>{
@@ -61,6 +63,10 @@ router.get('/artedit',ArtController.artEdit)
 router.get('/addArticle',ArtController.addArticle)
 // 提交文章的数据入库
 router.post('/submitArticles',ArtController.submitArticles)
+// 上传文件的接口
+router.post('/upload',upload.single('file'),ArtController.upload)
+// 修改文章状态
+router.post('/modifyState',ArtController.modifyState)
 
 
 // 匹配失败的路由
