@@ -67,7 +67,8 @@ router.post('/submitArticles',ArtController.submitArticles)
 router.post('/upload',upload.single('file'),ArtController.upload)
 // 修改文章状态
 router.post('/modifyState',ArtController.modifyState)
-
+// 获取单条文章数据的接口
+router.get('/onlyArt',ArtController.onlyArt)
 
 // 匹配失败的路由
 router.all('*',CateController.all)

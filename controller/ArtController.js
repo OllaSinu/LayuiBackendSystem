@@ -96,7 +96,13 @@ ArticleController.modifyState = async (req,res)=>{
         res.json(updfail)
     }
 }
-
+// 获取单条文章
+ArticleController.onlyArt = async (req,res)=>{
+    let {art_id} = req.query;
+    let sql = `select * from article where art_id = ${art_id}`;
+    let data = await model(sql); // [{}]
+    res.json(data[0] || {})
+}
 
 // 暴露模块
 module.exports = ArticleController;

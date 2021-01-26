@@ -87,10 +87,10 @@ layui.use(['element','table'], function(){
       ,{fixed: 'right', title:'操作', 
       templet({status}) {
        
-          let temStr =  `<a class="layui-btn layui-btn-xs" lay-event="show">查看内容-${status}</a>`
+          let temStr =  `<a class="layui-btn layui-btn-xs" lay-event="show">查看内容</a>`
           switch(status){
             case 0 :
-            temStr += `<a class="layui-btn layui-btn-xs layui-bg-orange" lay-event="verify">待审核-${status}</a>`
+            temStr += `<a class="layui-btn layui-btn-xs layui-bg-orange" lay-event="verify">待审核</a>`
             break;
             default:
             break;
@@ -125,7 +125,7 @@ layui.use(['element','table'], function(){
   // 监听删除、编辑，审核事件
   table.on('tool(test)', function (obj) {
         let {data,event} = obj;
-        let {art_id} = data;
+        let {art_id,title,comtent} = data;
         // console.log(data);
         // data是当前点击对象的所有信息，art_id,title,comtent,cat_id,author,cover,status,publish_date
         switch (event) {
@@ -137,6 +137,9 @@ layui.use(['element','table'], function(){
             break;
           case "verify": // 待审核
             verify(art_id)
+            break;
+          case "show": // 查看内容
+            show(title,comtent)
             break;
         }
   });
@@ -194,6 +197,17 @@ layui.use(['element','table'], function(){
       }
 
 });
+
+  //弹框显示文章内容
+  function show(title,comtent){
+          layer.open({
+              title:title,
+              type: 1,
+              skin: 'layui-layer-rim', //加上边框
+              area: ['1100px', '640px'], //宽高
+              content: "<div style='padding:10px'>" + comtent + "</div>"
+            });
+  }
 
 
 function startNProgress(){
