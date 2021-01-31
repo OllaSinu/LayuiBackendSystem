@@ -46,6 +46,10 @@ ArticleController.deleteArticle = async (req,res)=>{
 }
 // 渲染出文章编辑的页面
 ArticleController.artEdit = (req,res)=>{
+     // 判断是否有权限
+    // if(!req.session.userInfo){
+    //     res.send('你想翻墙没门');return;
+    // }
     res.render('article-edit.html')
 }
 
@@ -103,6 +107,34 @@ ArticleController.onlyArt = async (req,res)=>{
     let data = await model(sql); // [{}]
     res.json(data[0] || {})
 }
+// 编辑文章数据入库
+ArticleController.editData = async (req,res)=>{
+    //1.接收post数据(校验)
+    let a = req.body;
+    console.log(a);
+    
+    let {cover,title,cat_id,art_id,comtent,status,oldCover} = req.body
+    // 2.执行sql语句
+    let sql;
+    if(cover){
+        // 有值更新图片，且要删除原图
+      sql = `update article set title='${title}',comtent='${comtent}',cover='${cover}'
+                ,cat_id=${cat_id},status = ${status} where art_id = ${art_id};`
+    }else{
+        // 没有值，则保留原图片
+        sql = `update article set title='${title}',comtent='${comtent}'
+                ,cat_id=${cat_id},status = ${status} where art_id = ${art_id};`
+    }
+    let result = await model(sql);
+    //3.响应结果
+    if(result.affectedRows){
+         // 成功之后，删除原图
+         cover && fs.unlinkSync(oldCover)
+        res.json(updsucc)
+    }else{
+        res.json(updfail)
+    }
 
+}
 // 暴露模块
 module.exports = ArticleController;

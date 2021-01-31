@@ -7,6 +7,7 @@ let router = express.Router();
 // 导入相应的控制器
 const CateController = require('../controller/CateController.js');
 const ArtController = require('../controller/ArtController.js');
+const UserController = require('../controller/UserController.js');
 
 // 引入图片的相应模块
 var multer  = require('multer')
@@ -19,6 +20,7 @@ var upload = multer({ dest: 'uploads/' })
 // })
 router.get('/',(req,res)=>{
     // res.sendFile(path.join(__dirname,'views/index.html'));
+    // console.log( req.session.userInfo);
     res.render('index.html');
 })
 // 栏目管理
@@ -69,6 +71,17 @@ router.post('/upload',upload.single('file'),ArtController.upload)
 router.post('/modifyState',ArtController.modifyState)
 // 获取单条文章数据的接口
 router.get('/onlyArt',ArtController.onlyArt)
+// 编辑文章的数据接口
+router.post('/editData',ArtController.editData)
+
+
+// 渲染用户登录页面
+router.get('/login',UserController.login)
+// 用户登录
+router.post('/signin',UserController.signin)
+// 用户退出
+router.get('/logout',UserController.logout)
+
 
 // 匹配失败的路由
 router.all('*',CateController.all)
