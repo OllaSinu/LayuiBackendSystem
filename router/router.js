@@ -4,6 +4,8 @@ const express = require('express');
 // 得到一个路由器
 let router = express.Router();
 
+
+const model = require('../model/model.js');
 // 导入相应的控制器
 const CateController = require('../controller/CateController.js');
 const ArtController = require('../controller/ArtController.js');
@@ -81,6 +83,24 @@ router.get('/login',UserController.login)
 router.post('/signin',UserController.signin)
 // 用户退出
 router.get('/logout',UserController.logout)
+
+
+// 统计出分类的文章总数
+router.get('/cateCount',async (req,res)=>{
+    let sql = `select count(*) total ,t2.name,t1.cat_id from article t1 
+                left join category t2 
+                on t1.cat_id = t2.cate_id 
+                group by  t1.cat_id`;
+    let data = await model(sql); // [{},{},{},{}]
+    res.json(data)
+})
+// 统计出当前的每月的文章总数
+router.get('/artCount',async (req,res)=>{
+    let sql = `select month(publish_date) month,count(*) as total from article 
+    where year(publish_date) = year(now()) group by month(publish_date)`
+    let data = await model(sql);
+    res.json(data)
+})
 
 
 // 匹配失败的路由

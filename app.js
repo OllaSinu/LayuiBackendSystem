@@ -1,6 +1,17 @@
 const express = require('express');
 const app = express();
 const path = require('path')
+let cors = require('cors');
+
+
+// 设置跨域
+app.use(cors())
+
+// // 允许跨域请求
+// app.use('/api',function(request,response,next){
+//     response.setHeader('Access-Control-Allow-Origin','*')
+//     next()  
+// })
 
 // 托管静态资源
 app.use('/public',express.static(path.join(__dirname,'public')))
@@ -25,6 +36,7 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 
 // 导入路由模块
 const router = require('./router/router.js')
+const apiRouter = require('./router/apiRouter.js')
 
 // 引入session会话技术
 let session = require('express-session');
@@ -39,6 +51,8 @@ let options = {
         // 再次访问，时间重置为24分钟， 24分钟内只要不访问则会失效
     }
 };
+// 引用前台路由（要在session之前使用，防止重定向）
+app.use('/api',apiRouter);
 app.use( session(options) )
 
 // 在进入到路由匹配函数之前，要进行验证权限
@@ -64,6 +78,7 @@ app.use(function(req,res,next){
 
 // 使用路由中间件 req.body
 app.use(router)
+
 
 app.listen(4000,_=>{
     console.log('服务器已启动 port 4000');

@@ -21,7 +21,9 @@ UserController.signin = async (req,res)=>{
     //2.数据库查询,要把密码md5加密之后在判断
     password = md5(`${password}${passSecret}`);
     let sql = `select * from users where username='${username}' and password = '${password}'`
+
     let data = await model(sql);// [{}]
+   
     //3.响应结果
     if(data.length){
         // 匹配成功 
